@@ -18,7 +18,13 @@ format:
 	@black api/
 	@flake8 api/
 
-run: setup
-	@uvicorn api.main:app --reload
+products: 
+	@uvicorn api.products:app --reload --port 8000
 
+orders: 
+	@uvicorn api.orders:app --reload --port 9000
+
+kill:
+	@lsof -i :8000 -t | xargs kill -9
+	@lsof -i :9000 -t | xargs kill -9
 
