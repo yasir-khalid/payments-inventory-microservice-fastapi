@@ -24,7 +24,12 @@ products:
 orders: 
 	@uvicorn api.orders:app --reload --port 9000
 
+# Target that kills processes on a specific port
+kill_port:
+	@echo "killing all processes associated with 'port: ${port}'"
+	@lsof -i :$(port) -t | xargs kill -9
+
 kill:
-	@lsof -i :8000 -t | xargs kill -9
-	@lsof -i :9000 -t | xargs kill -9
+	@$(MAKE) port=8000 kill_port
+	@$(MAKE) port=9000 kill_port
 
